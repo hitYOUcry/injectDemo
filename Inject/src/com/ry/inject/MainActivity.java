@@ -2,9 +2,11 @@ package com.ry.inject;
 
 
 import com.ry.inject.service.FloatWindowService;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * @Title: MainActivity.java
@@ -14,11 +16,13 @@ import android.os.Bundle;
  */
 public class MainActivity extends Activity  {
 
+	private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        Log.i(TAG,"onCreate");
         startService(new Intent(this,FloatWindowService.class));
         this.finish();
     }

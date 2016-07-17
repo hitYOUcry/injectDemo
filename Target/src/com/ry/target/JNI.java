@@ -1,5 +1,7 @@
 package com.ry.target;
 
+import android.util.Log;
+
 /**
  * @Title: JNI.java
  * @Description:
@@ -16,6 +18,5 @@ public class JNI {
     public native int getNumber(int number);
         
     public native void destroy();
-
-
+    
 }

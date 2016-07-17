@@ -20,4 +20,6 @@ LOCAL_MODULE    := target
 LOCAL_SRC_FILES := target.c 
 LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog
 LOCAL_LDLIBS    += -llog
+LOCAL_LDLIBS    += -landroid
 include $(BUILD_SHARED_LIBRARY)
+

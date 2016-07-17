@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -143,7 +144,8 @@ public class ShellUtils {
         DataOutputStream os = null;
         try {
             process = Runtime.getRuntime().exec(isRoot ? COMMAND_SU : COMMAND_SH);
-            os = new DataOutputStream(process.getOutputStream());
+            OutputStream o = process.getOutputStream();
+            os = new DataOutputStream(o);
             for (String command : commands) {
                 if (command == null) {
                     continue;
@@ -151,6 +153,7 @@ public class ShellUtils {
 
                 // donnot use os.writeBytes(commmand), avoid chinese charset error
                 os.write(command.getBytes());
+//                os.writeBytes(command);
                 os.writeBytes(COMMAND_LINE_END);
                 os.flush();
             }
