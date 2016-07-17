@@ -29,10 +29,31 @@ extern "C" {//Ｃ＋＋编译器按照C的obj文件格式编译
 void init()
 {
 	LOGD("entry init()");
+	//JVM init
 	g_JavaVM = android::AndroidRuntime::getJavaVM();
-	if(g_JavaVM != NULL){
-		LOGD("init success!");
+	if(g_JavaVM == NULL){
+		LOGD("JVM pointer init failed!");
 	}
+	LOGD("JVM pointer init success");
+	
+	//JNIEnv init
+	int status;
+    JNIEnv *env = NULL;
+    status = g_JavaVM->GetEnv((void **)&env, JNI_VERSION_1_4);
+    if(status < 0)
+    {
+        status = g_JavaVM->AttachCurrentThread(&env, NULL);
+        if(status < 0)
+        {
+            return;
+        }
+        g_Attach = true;
+    }
+	if(env == NULL){
+		LOGD("JNIEnv pointer init failed!");
+	}
+	LOGD("JNIEnv pointer init success");
+	
 	
 	// visiual test
 	void *handle = dlopen(target_path, 2);
@@ -58,9 +79,9 @@ void init()
 
 /*
 // getEnv
-static JNIEnv *GetEnv()
+JNIEnv* GetEnv()
 {
- int status;
+	int status;
     JNIEnv *envnow = NULL;
     status = g_JavaVM->GetEnv((void **)&envnow, JNI_VERSION_1_4);
     if(status < 0)
